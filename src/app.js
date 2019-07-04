@@ -1,5 +1,5 @@
 const api_pokedex_kanto = 'https://pokeapi.co/api/v2/pokedex/2/';
-import regeneratorRuntime from "regenerator-runtime";
+require('./style.scss');
 
 const Pokedex = {
     variables: {

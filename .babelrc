@@ -5,8 +5,7 @@
             {
                 "targets": {
                     "browsers": [
-                        "chrome 55",
-                        "IE >= 9"
+                        "chrome 55"
                     ]
                 }
             }
