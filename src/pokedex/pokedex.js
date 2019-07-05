@@ -36,6 +36,9 @@ const Pokedex = {
                 Pokemon_detail.init_detail(`https://pokeapi.co/api/v2/pokemon/${id}`, `https://pokeapi.co/api/v2/pokemon-species/${id}`);
             });
         });
+    }, 
+    capitalize_first_letter: function(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 };
 
