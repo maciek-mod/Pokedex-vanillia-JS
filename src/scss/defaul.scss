@@ -1,0 +1,10 @@
+@import './lib/reset';
+@import './pokemon_list/list';
+@import './pokemon_detail/detail';
+
+
+
+#app{
+    display: flex;
+    flex-wrap: nowrap;
+}

@@ -15,15 +15,15 @@ const Pokedex = {
     },
 
     view_list: function(pokedex_request) {
-        let template = '<ul id="pokedex_list"> </ul>';
+        let template = '<div id="pokedex_list_container"><ul id="pokedex_list"> </ul></div>';
         this.variables.app_container.insertAdjacentHTML('beforeend', template);
         pokedex_request.pokemon_entries.map(item => {
-            this.template_html(item, "pokedex_list");
+            this.template_list_html(item, "pokedex_list");
         });
         this.add_event_to_list_pokemon();
     },
 
-    template_html: function(elements, elements_id) {
+    template_list_html: function(elements, elements_id) {
         let template = `<li data-id="${elements.entry_number}"> ${elements.entry_number}. ${elements.pokemon_species.name}  </li>`;
         document.getElementById(elements_id).insertAdjacentHTML('beforeend', template);
     },

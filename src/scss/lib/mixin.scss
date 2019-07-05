@@ -1,0 +1,314 @@
+
+    $to_relative_default: false;
+
+    @function strip_unit($value) {
+      @return $value / ($value * 0 + 1);
+    }
+// --------------------------------------------------
+// FONTS - update as needed
+// --------------------------------------------------
+    @mixin Oswald($size: $size_default,$weight : $weight_default, $line_height : $line_height_default, $to_relative : $to_relative_default){
+        @if $size == '' {
+          $size: $size_default;
+        }
+        @if $weight == '' {
+          $weight: $weight_default;
+        }
+        @if $line_height == '' {
+          $line_height: $line_height_default;
+        }
+        @if $to_relative == true {
+            $size: (strip_unit($size) / strip_unit($rem_base)) * 1rem;
+        }
+
+        font-family: 'Oswald', sans-serif;
+        font-size: $size;
+        font-weight: $weight;
+        line-height: $line_height;
+    }
+
+    @mixin Lato($size: $size_default,$weight : $weight_default,$line_height : $line_height_default, $to_relative : $to_relative_default){
+        @if $size == '' {
+          $size: $size_default;
+        }
+        @if $weight == '' {
+          $weight: $weight_default;
+        }
+        @if $line_height == '' {
+          $line_height: $line_height_default;
+        }
+        @if $to_relative == true {
+            $size: (strip_unit($size) / strip_unit($rem_base)) * 1rem;
+        }
+
+        font-family: 'Lato', sans-serif;
+        font-size: $size;
+        font-weight: $weight;
+        line-height: $line_height;
+    }
+
+    @mixin Roboto($size: $size_default,$weight : $weight_default,$line_height : $line_height_default, $to_relative : $to_relative_default){
+        @if $size == '' {
+          $size: $size_default;
+        }
+        @if $weight == '' {
+          $weight: $weight_default;
+        }
+        @if $line_height == '' {
+          $line_height: $line_height_default;
+        }
+        @if $to_relative == true {
+            $size: (strip_unit($size) / strip_unit($rem_base)) * 1rem;
+        }
+
+        font-family: 'Roboto', sans-serif;
+        font-size: $size;
+        font-weight: $weight;
+        line-height: $line_height;
+    }
+
+    @mixin Font($size: $size_default,$weight : $weight_default,$line_height : $line_height_default, $to_relative : $to_relative_default){
+        @if $size == '' {
+          $size: $size_default;
+        }
+        @if $weight == '' {
+          $weight: $weight_default;
+        }
+        @if $line_height == '' {
+          $line_height: $line_height_default;
+        }
+        @if $to_relative == true {
+            $size: (strip_unit($size) / strip_unit($rem_base)) * 1rem;
+        }
+
+        font-size: $size;
+        font-weight: $weight;
+        line-height: $line_height;
+    }
+
+        /* USAGE
+            @include Lato();
+            @include Lato(10px,400,1);
+            @include Lato($size_default*2px,700,25px);
+            @include Lato(2rem,"",25px);
+            @include Lato($size_default*2px,700,25px, true);
+        */
+
+// --------------------------------------------------
+// FLUIDSTYLES - works only with px
+// --------------------------------------------------
+
+
+    @mixin flFont($min_font_size, $max_font_size, $min_vw: $clip_bottom_width, $max_vw: $clip_top_width) {
+
+        @if $min_vw == '' {
+          $min_vw: $clip_bottom_width;
+        }
+        @if $max_vw == '' {
+          $max_vw: $clip_top_width;
+        }
+
+        $u1: unit($min_vw);
+        $u2: unit($max_vw);
+        $u3: unit($min_font_size);
+        $u4: unit($max_font_size);
+
+        @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+            &{
+                font-size: $min_font_size;
+                @media screen and (min-width: $min_vw) {
+                    font-size: calc(#{$min_font_size} + #{strip_unit($max_font_size - $min_font_size)} * ((100vw - #{$min_vw}) / #{strip_unit($max_vw - $min_vw)}));
+                }
+                @media screen and (min-width: $max_vw) {
+                    font-size: $max_font_size;
+                }
+            }
+        }
+    }
+
+        /* USAGE
+            @include flFont {10px,20px,480px,1920px}
+            @include flFont($size_default*$scale_hd, $size_default, $clip_top_width*$scale_hd,$clip_top_width);
+        */
+
+    @mixin flPadding($min_padding_v, $max_padding_v, $min_padding_h, $max_padding_h, $min_vw: $clip_bottom_width, $max_vw: $clip_top_width) {
+
+        @if $min_vw == '' {
+          $min_vw: $clip_bottom_width;
+        }
+        @if $max_vw == '' {
+          $max_vw: $clip_top_width;
+        }
+
+        $u1: unit($min_vw);
+        $u2: unit($max_vw);
+        $u3: unit($min_padding_v);
+        $u4: unit($max_padding_v);
+        $u5: unit($min_padding_h);
+        $u6: unit($max_padding_h);
+
+
+        @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 and $u1 == $u5 and $u1 == $u6 {
+            &{
+                padding: $min_padding_v $min_padding_h;
+                @media screen and (min-width: $min_vw) {
+                    padding: calc(#{$min_padding_v} + #{strip_unit($max_padding_v - $min_padding_v)} * ((100vw - #{$min_vw}) / #{strip_unit($max_vw - $min_vw)}))
+                    calc(#{$min_padding_h} + #{strip_unit($max_padding_h - $min_padding_h)} * ((100vw - #{$min_vw}) / #{strip_unit($max_vw - $min_vw)}));
+                }
+                @media screen and (min-width: $max_vw) {
+                    padding: $max_padding_v $max_padding_h;
+                }
+            }
+        }
+    }
+
+        /* USAGE
+            @include flPadding(
+                0px,
+                0px,
+                $gutter,
+                3*$gutter,
+                1400px
+            );
+            @include flPadding(
+                10px,
+                30px,
+                $gutter,
+                3*$gutter,
+                1400px
+            );
+        */
+
+    @mixin flProperty($property, $min, $max, $start: $clip_bottom_width, $end: $clip_top_width, $clip: true, $clipAtStart: true, $clipAtEnd: true) {
+        $multiplier: ($max - $min) / ($end - $start) * 100;
+        $adder: ($min * $end - $max * $start) / ($end - $start);
+        $formula: calc(#{$multiplier + 0vw} + #{$adder + 0px});
+        @if $clip and $clipAtStart {
+            @media (max-width: #{$start + 0px}) {
+                #{$property}: $min + 0px;
+            }
+        }
+        @if $clip and $clipAtEnd {
+            @media (min-width: #{$end + 0px}) {
+                #{$property}: $max + 0px;
+            }
+        }
+        #{$property}: $formula;
+    }
+
+        /* USAGE
+            @include flProperty("margin-bottom", 2*$gutter, 6*$gutter, 580px);
+            @include flProperty("max-width", 750px, 1050px, 1400px);
+        */
+
+
+
+// --------------------------------------------------
+// PLACEHOLDER
+// --------------------------------------------------
+    @mixin placeholder {
+        &::-webkit-input-placeholder {@content}
+        &:-moz-placeholder           {@content}
+        &::-moz-placeholder          {opacity: 1; @content}
+        &:-ms-input-placeholder      {@content}
+    };
+
+        /* USAGE
+            @include placeholder {
+                font-style:italic;
+                color: white;
+                font-weight:100;
+            }
+        */
+
+
+
+// --------------------------------------------------
+// TARGET BROWSERS
+// --------------------------------------------------
+    @mixin targetIE11{
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+            @content
+        }
+    };
+
+        /* USAGE
+            @include targetIE11 {
+                font-style:italic;
+                color: white;
+                font-weight:100;
+            }
+        */
+
+    @mixin targetFirefox{
+        @-moz-document url-prefix() {
+            @content
+        }
+    };
+
+        /* USAGE
+            @include targetFirefox {
+                font-style:italic;
+                color: white;
+                font-weight:100;
+            }
+        */
+
+    @mixin targetEdge{
+        @supports (-ms-ime-align: auto) {
+            @content
+        }
+    };
+
+    /* USAGE
+        @include targetFirefox {
+            font-style:italic;
+            color: white;
+            font-weight:100;
+        }
+    */
+
+
+
+// --------------------------------------------------
+// OTHER
+// --------------------------------------------------
+
+@mixin toRelative($property, $value) {
+    $size: (strip_unit($value) / strip_unit($rem_base)) * 1rem;
+    #{$property}: $size;
+}
+
+@mixin column($col) {
+    width: calc(#{$col}/12 * 100%);
+}
+
+@mixin icon($path, $width, $height) {
+    width: $width;
+    height: $height;
+    display: inline-block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent !important;
+    background-color: unset !important;
+    background-image: url("#{$path}");
+
+    &:after{
+        visibility: hidden;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+        position: fixed;
+        z-index: -9999;
+        content: url("#{$path}");
+        left: 0;
+        bottom: 0;
+    }
+}
+
+@mixin boxShadow($horizontal, $vertical, $blur, $spread, $color) {
+    -webkit-box-shadow: $horizontal $vertical $blur $spread $color;
+    -moz-box-shadow: $horizontal $vertical $blur $spread $color;
+    box-shadow: $horizontal $vertical $blur $spread $color;
+}
