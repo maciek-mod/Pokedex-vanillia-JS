@@ -3,10 +3,18 @@
     max-width: 20%;
     background: rgba(0,0,0,.3);
     padding: 20px;
+    min-height: 100vh;
+    overflow-y: scroll;
     ul{
         li{
             cursor: pointer;
             margin-bottom: 20px;
+            &.active{
+                display: block;
+            }
+            &.no_active{
+                display: none;
+            }
         }
     }
 }

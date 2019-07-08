@@ -15,7 +15,7 @@ const Pokedex = {
     },
 
     view_list: function(pokedex_request) {
-        let template = '<div id="pokedex_list_container"><ul id="pokedex_list"> </ul></div>';
+        let template = '<div id="pokedex_list_container"><div> <input type="text" name="" value="" placeholder="Search pokemon"> <ul id="pokedex_list"> </ul></div>';
         this.variables.app_container.insertAdjacentHTML('beforeend', template);
         pokedex_request.pokemon_entries.map(item => {
             this.template_list_html(item, "pokedex_list");
@@ -36,7 +36,8 @@ const Pokedex = {
                 Pokemon_detail.init_detail(`https://pokeapi.co/api/v2/pokemon/${id}`, `https://pokeapi.co/api/v2/pokemon-species/${id}`);
             });
         });
-    }, 
+        Pokemon_detail.search();
+    },
     capitalize_first_letter: function(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }

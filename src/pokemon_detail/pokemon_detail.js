@@ -15,7 +15,7 @@ Pokemon_detail.template_detail_html = function(req, req2) {
         }
         this.template_detail_html_header(req, req2);
     } else {
-        let template = `<div id="pokemon_detail" data-id="${req.name}"> </div>`;
+        let template = `<div id="pokemon_detail" data-id="${req.name}"> </div> </div>`;
         Pokedex.variables.app_container.insertAdjacentHTML('beforeend', template);
         this.template_detail_html_header(req, req2);
     }
@@ -38,6 +38,35 @@ Pokemon_detail.template_detail_html_header = function(req, req2){
         }
     }
 }
+Pokemon_detail.search = function(){
+    let input_search = document.querySelector("#pokedex_list_container input"),
+        pokedex_list = document.querySelectorAll("#pokedex_list li");
+    input_search.addEventListener("keydown", function(event){
+        let input_value = this.value;
+        search_pokemon(input_value);
+    })
+    input_search.addEventListener("keyup", function(event){
+        let input_value = this.value;
+        search_pokemon(input_value);
+    })
+    function search_pokemon(name){
+        for (var i = 0; i < pokedex_list.length; i++) {
+            if (pokedex_list[i].innerText.indexOf(name) !== -1) {
+                pokedex_list[i].classList.add("active");
+                if (pokedex_list[i].classList.contains("no_active")) {
+                    pokedex_list[i].classList.remove("no_active");
+                }
+            } else {
+                if (pokedex_list[i].classList.contains("active")) {
+                    pokedex_list[i].classList.remove("active");
+                    pokedex_list[i].classList.add("no_active");
+                }
+            }
+        }
+    }
+}
+
+
 
 
 
