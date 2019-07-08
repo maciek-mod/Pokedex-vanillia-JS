@@ -22,8 +22,15 @@ Pokemon_detail.template_detail_html = function(req, req2) {
 
 }
 Pokemon_detail.template_detail_html_header = function(req, req2){
-    // console.log(req);
-    let template_container = `<header><h1>${this.capitalize_first_letter(req.name)}</h1> <div class="types_pokemon"></div></header>`;
+    let desc = null;
+    for (var key in req2.flavor_text_entries) {
+        if (req2.flavor_text_entries[key].language.name === "en" && req2.flavor_text_entries[key].version.name === "yellow") {
+            desc = req2.flavor_text_entries[key].flavor_text;
+            break;
+        }
+    }
+    
+    let template_container = `<header><h1>${this.capitalize_first_letter(req.name)}</h1> <h2>${desc}</h2> <div class="types_pokemon"></div></header>`;
     document.getElementById('pokemon_detail').insertAdjacentHTML('beforeend', template_container);
 
     req.types.map(item => {
