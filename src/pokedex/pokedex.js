@@ -29,7 +29,7 @@ const Pokedex = {
     },
 
     add_event_to_list_pokemon: function() {
-        let list_pokemon = Array.from(document.querySelectorAll("#pokedex_list li"));
+        let list_pokemon = Array.from(document.body.querySelectorAll("#pokedex_list li"));
         list_pokemon.map(item => {
             item.addEventListener('click', function(event) {
                 let id = this.getAttribute("data-id");

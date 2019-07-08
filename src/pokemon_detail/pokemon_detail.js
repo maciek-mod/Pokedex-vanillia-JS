@@ -29,7 +29,7 @@ Pokemon_detail.template_detail_html_header = function(req, req2){
             break;
         }
     }
-    
+
     let template_container = `<header><h1>${this.capitalize_first_letter(req.name)}</h1> <h2>${desc}</h2> <div class="types_pokemon"></div></header>`;
     document.getElementById('pokemon_detail').insertAdjacentHTML('beforeend', template_container);
 
@@ -46,12 +46,8 @@ Pokemon_detail.template_detail_html_header = function(req, req2){
     }
 }
 Pokemon_detail.search = function(){
-    let input_search = document.querySelector("#pokedex_list_container input"),
+    let input_search = document.body.querySelector("#pokedex_list_container input"),
         pokedex_list = document.querySelectorAll("#pokedex_list li");
-    input_search.addEventListener("keydown", function(event){
-        let input_value = this.value;
-        search_pokemon(input_value);
-    })
     input_search.addEventListener("keyup", function(event){
         let input_value = this.value;
         search_pokemon(input_value);
@@ -66,8 +62,8 @@ Pokemon_detail.search = function(){
             } else {
                 if (pokedex_list[i].classList.contains("active")) {
                     pokedex_list[i].classList.remove("active");
-                    pokedex_list[i].classList.add("no_active");
                 }
+                pokedex_list[i].classList.add("no_active");
             }
         }
     }
