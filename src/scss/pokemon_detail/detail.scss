@@ -1,4 +1,16 @@
 #pokemon_detail{
     flex-basis: 80%;
     max-width: 80%;
+    #pokemon_img{
+        #normal_form ,#shiny_form{
+            display: flex;
+            flex-wrap: wrap;
+            div{
+                flex-basis: 15%;
+                max-width: 15%;
+                text-align: center;
+            }
+        }
+    }
+
 }

@@ -15,13 +15,14 @@ Pokemon_detail.template_detail_html = function(req, req2) {
         }
         this.template_detail_html_header(req, req2);
     } else {
-        let template = `<div id="pokemon_detail" data-id="${req.name}"> </div> </div>`;
+        let template = `<div id="pokemon_detail" data-id=${req.name}> </div> </div>`;
         Pokedex.variables.app_container.insertAdjacentHTML('beforeend', template);
         this.template_detail_html_header(req, req2);
     }
 
 }
 Pokemon_detail.template_detail_html_header = function(req, req2){
+    console.log(req2);
     let desc = null;
     for (var key in req2.flavor_text_entries) {
         if (req2.flavor_text_entries[key].language.name === "en" && req2.flavor_text_entries[key].version.name === "yellow") {
@@ -30,18 +31,24 @@ Pokemon_detail.template_detail_html_header = function(req, req2){
         }
     }
 
-    let template_container = `<header><h1>${this.capitalize_first_letter(req.name)}</h1> <h2>${desc}</h2> <div class="types_pokemon"></div></header>`;
+    let template_container = `<header><h1>${this.capitalize_first_letter(req.name)}</h1><div class="types_pokemon"></div></header><section id="pokemon_desc"><h2>${desc}</h2> </section><section id="pokemon_img"><div id="normal_form"></div><div id="shiny_form"></div></section><section id="pokemon_stat"></section>`;
     document.getElementById('pokemon_detail').insertAdjacentHTML('beforeend', template_container);
 
     req.types.map(item => {
         let template_type =  `<p>${this.capitalize_first_letter(item.type.name)}</p>`;
-        document.querySelector('.types_pokemon').insertAdjacentHTML('beforeend', template_type);
+        document.body.querySelector('#pokemon_desc').insertAdjacentHTML('beforeend', template_type);
     });
 
     for (let key in req.sprites) {
         if (req.sprites[key] !== null) {
-            let template_sprite =  `<div> <img src=${req.sprites[key]} alt="${key}"> <h2>${this.capitalize_first_letter(key.replace(/_/g, ' '))}</h2> </div>`;
-            document.querySelector('.types_pokemon').insertAdjacentHTML('beforeend', template_sprite);
+            console.log(key.indexOf("shiny") !== -1);
+            if (key.indexOf("shiny") !== -1) {
+                let template_sprite =  `<div> <img src=${req.sprites[key]} alt="${key}"> <h3>${this.capitalize_first_letter(key.replace(/_/g, ' '))}</h3> </div>`;
+                document.body.querySelector('#shiny_form').insertAdjacentHTML('beforeend', template_sprite);
+            } else {
+                let template_sprite =  `<div> <img src=${req.sprites[key]} alt="${key}"> <h3>${this.capitalize_first_letter(key.replace(/_/g, ' '))}</h3> </div>`;
+                document.body.querySelector('#normal_form').insertAdjacentHTML('beforeend', template_sprite);
+            }
         }
     }
 }
