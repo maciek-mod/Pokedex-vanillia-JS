@@ -17,12 +17,12 @@ Pokemon_detail.template_detail_html = function(req, req2) {
     } else {
         let template = `<div id="pokemon_detail" data-id=${req.name}> </div> </div>`;
         Pokedex.variables.app_container.insertAdjacentHTML('beforeend', template);
-        this.template_detail_html_header(req, req2);
+        this.template_detail_html(req, req2);
     }
 
 }
 Pokemon_detail.template_detail_html_header = function(req, req2){
-    console.log(req2);
+    console.log(req.stats);
     let desc = null;
     for (var key in req2.flavor_text_entries) {
         if (req2.flavor_text_entries[key].language.name === "en" && req2.flavor_text_entries[key].version.name === "yellow") {
@@ -41,7 +41,6 @@ Pokemon_detail.template_detail_html_header = function(req, req2){
 
     for (let key in req.sprites) {
         if (req.sprites[key] !== null) {
-            console.log(key.indexOf("shiny") !== -1);
             if (key.indexOf("shiny") !== -1) {
                 let template_sprite =  `<div> <img src=${req.sprites[key]} alt="${key}"> <h3>${this.capitalize_first_letter(key.replace(/_/g, ' '))}</h3> </div>`;
                 document.body.querySelector('#shiny_form').insertAdjacentHTML('beforeend', template_sprite);
@@ -50,6 +49,13 @@ Pokemon_detail.template_detail_html_header = function(req, req2){
                 document.body.querySelector('#normal_form').insertAdjacentHTML('beforeend', template_sprite);
             }
         }
+    }
+
+    for (var key in req.stats) {
+        let stat = req.stats[key].base_stat,
+            stat_name = req.stats[key].stat.name,
+            template_stat = `<div><h4>${this.capitalize_first_letter(stat_name.replace(/-/g, ' '))}<h4> <p>${stat}</p><div>`
+        document.body.querySelector('#pokemon_stat').insertAdjacentHTML('beforeend', template_stat);
     }
 }
 Pokemon_detail.search = function(){
