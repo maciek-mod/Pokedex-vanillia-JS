@@ -22,7 +22,7 @@ Pokemon_detail.template_detail_html = function(req, req2) {
 
 }
 Pokemon_detail.template_detail_html_header = function(req, req2){
-    console.log(req.stats);
+    // console.log(req.moves);
     let desc = null;
     for (var key in req2.flavor_text_entries) {
         if (req2.flavor_text_entries[key].language.name === "en" && req2.flavor_text_entries[key].version.name === "yellow") {
@@ -31,7 +31,7 @@ Pokemon_detail.template_detail_html_header = function(req, req2){
         }
     }
 
-    let template_container = `<header><h1>${this.capitalize_first_letter(req.name)}</h1><div class="types_pokemon"></div></header><section id="pokemon_desc"><h2>${desc}</h2> </section><section id="pokemon_img"><div id="normal_form"></div><div id="shiny_form"></div></section><section id="pokemon_stat"></section>`;
+    let template_container = `<header><h1>${this.capitalize_first_letter(req.name)}</h1><div class="types_pokemon"></div></header><section id="pokemon_desc"><h2>${desc}</h2> </section><section id="pokemon_img"><div id="normal_form"></div><div id="shiny_form"></div></section><section id="pokemon_stat"></section><section id="pokemon_moves"><h3>Moves</h3><ul></ul></section>`;
     document.getElementById('pokemon_detail').insertAdjacentHTML('beforeend', template_container);
 
     req.types.map(item => {
@@ -56,6 +56,12 @@ Pokemon_detail.template_detail_html_header = function(req, req2){
             stat_name = req.stats[key].stat.name,
             template_stat = `<div><h4>${this.capitalize_first_letter(stat_name.replace(/-/g, ' '))}<h4> <p>${stat}</p><div>`
         document.body.querySelector('#pokemon_stat').insertAdjacentHTML('beforeend', template_stat);
+    }
+
+    for (var key in req.moves) {
+        let name = this.capitalize_first_letter(req.moves[key].move.name.replace(/-/g, ' ')),
+            template_move = `<li>${name}</li>`;
+        document.body.querySelector('#pokemon_moves ul').insertAdjacentHTML('beforeend', template_move);
     }
 }
 Pokemon_detail.search = function(){
