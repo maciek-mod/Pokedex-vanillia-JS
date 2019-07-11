@@ -22,7 +22,7 @@ Pokemon_detail.template_detail_html = function(req, req2) {
 
 }
 Pokemon_detail.template_detail_html_header = function(req, req2){
-    // console.log(req.moves);
+    console.log(req2);
     let desc = null;
     for (var key in req2.flavor_text_entries) {
         if (req2.flavor_text_entries[key].language.name === "en" && req2.flavor_text_entries[key].version.name === "yellow") {
@@ -31,7 +31,7 @@ Pokemon_detail.template_detail_html_header = function(req, req2){
         }
     }
 
-    let template_container = `<header><h1>${this.capitalize_first_letter(req.name)}</h1><div class="types_pokemon"></div></header><section id="pokemon_desc"><h2>${desc}</h2> </section><section id="pokemon_img"><div id="normal_form"></div><div id="shiny_form"></div></section><section id="pokemon_stat"></section><section id="pokemon_moves"><h3>Moves</h3><ul></ul></section>`;
+    let template_container = `<header><h1>${this.capitalize_first_letter(req.name)}</h1><h2> Pokedex id: ${req2.id}</h2> <div class="types_pokemon"></div></header><section id="pokemon_desc"><h2>${desc}</h2> </section><section id="pokemon_img"><div id="normal_form"></div><div id="shiny_form"></div></section><section id="pokemon_stat"></section><section id="pokemon_moves"><h3>Moves</h3><ul></ul></section>`;
     document.getElementById('pokemon_detail').insertAdjacentHTML('beforeend', template_container);
 
     req.types.map(item => {
